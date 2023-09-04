@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=0
+pkgver=23.1.6
 pkgrel=2
 arch=('x86_64')
 makedepends=('git' 'python-mako' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils'
@@ -101,20 +101,20 @@ sha512sums=('SKIP'
             '25da77914dded10c1f432ebcbf29941124138824ceecaf1367b3deedafaecabc082d463abcfa3d15abff59f177491472b505bcb5ba0c4a51bb6b93b4721a23c2'
             'c7dbb390ebde291c517a854fcbe5166c24e95206f768cc9458ca896b2253aabd6df12a7becf831998721b2d622d0c02afdd8d519e77dea8e1d6807b35f0166fe')
 
-function exit_cleanup {
-  if [ "$pkgver" != "0" ]; then
-    sed -i "s/pkgver=$pkgver.*/pkgver=0/g" "$_where"/PKGBUILD
-  fi
-
-  # Remove temporarily copied patches
-  sleep 1 # Workarounds a race condition with ninja
-  rm -rf "$_where"/*.mymesa*
-  rm -f "$_where"/frogminer
-
-  remove_deps
-  
-  msg2 "Cleanup done"
-}
+# function exit_cleanup {
+#   if [ "$pkgver" != "0" ]; then
+#     sed -i "s/pkgver=$pkgver.*/pkgver=0/g" "$_where"/PKGBUILD
+#   fi
+# 
+#   # Remove temporarily copied patches
+#   sleep 1 # Workarounds a race condition with ninja
+#   rm -rf "$_where"/*.mymesa*
+#   rm -f "$_where"/frogminer
+# 
+#   remove_deps
+#   
+#   msg2 "Cleanup done"
+# }
 
 user_patcher() {
 	# To patch the user because all your base are belong to us
@@ -234,11 +234,11 @@ case $MESA_WHICH_LLVM in
     *)
 esac
 
-pkgver() {
-    cd "$_mesa_srcdir"
-    _ver=$( cat VERSION )
-    echo $_ver
-}
+# pkgver() {
+#     cd "$_mesa_srcdir"
+#     _ver=$( cat VERSION )
+#     echo $_ver
+# }
 
 prepare() {
     # cleanups
@@ -611,4 +611,4 @@ package_lib32-mesa-tkg-stable() {
   fi
 }
  
-trap exit_cleanup EXIT
+# trap exit_cleanup EXIT
