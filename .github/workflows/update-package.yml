@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Translator Dependencies
+      - name: Install Dependencies
         shell: bash
         run: |
           sudo apt-get update
@@ -121,9 +121,9 @@ jobs:
           sudo rm -r biglinux-key
           sudo pacman -Sy
           
-      # Tmate ##
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # # Tmate ##
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
           
       - name: Update Mesa TKG Stable Version
         shell: bash
@@ -148,10 +148,10 @@ jobs:
             # echo ${{ github.token }} | gh auth login --with-token
             # gh repo sync ${{ github.repository }}
             # git pull
-            rm *
+            rm -r *
             git clone https://github.com/Frogging-Family/mesa-git.git
             cp -a mesa-git/* .
-            rm -r mesa-git
+            sudo rm -r mesa-git
             
             sed -i 's/mesa-tkg-git/mesa-tkg-stable/g' PKGBUILD
             sed -i '/echo ${_ver\/-\/_}/s/.*/    echo $_ver/' PKGBUILD
