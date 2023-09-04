@@ -30,9 +30,9 @@ elif [ -e "$_EXT_CONFIG_PATH" ]; then
   source "$_EXT_CONFIG_PATH" && msg2 "External configuration file $_EXT_CONFIG_PATH will be used to override customization.cfg values.\n"
 fi
 
-pkgname=('mesa-tkg-git')
+pkgname=('mesa-tkg-stable')
 if [ "$_lib32" == "true" ]; then
-  pkgname+=('lib32-mesa-tkg-git')
+  pkgname+=('lib32-mesa-tkg-stable')
 fi
 
 # custom mesa commit to pass to git
@@ -44,7 +44,7 @@ fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
 pkgver=0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 makedepends=('git' 'python-mako' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils'
              'libomxil-bellagio' 'libxrandr' 'ocl-icd' 'libgcrypt'  'wayland'
