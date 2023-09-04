@@ -70,11 +70,11 @@ jobs:
           echo '
           [biglinux-testing]
           SigLevel = PackageRequired
-          Server = https://repo.biglinux.com.br/testing/$arch' | sudo tee -a /etc/pacman.conf
+          Server = https://${{ secrets.DEV_REPOSITORY }}.biglinux.com.br/testing/$arch' | sudo tee -a /etc/pacman.conf
           echo '
           [biglinux-stable]
           SigLevel = PackageRequired
-          Server = https://repo.biglinux.com.br/stable/$arch' | sudo tee -a /etc/pacman.conf
+          Server = https://${{ secrets.DEV_REPOSITORY }}.biglinux.com.br/stable/$arch' | sudo tee -a /etc/pacman.conf
           
           #Mirrorlist
           echo 'Server = https://mnvoip.mm.fcix.net/manjaro/stable/$repo/$arch' | sudo tee -a /etc/pacman.d/mirrorlist
