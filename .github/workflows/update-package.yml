@@ -125,8 +125,8 @@ jobs:
         run: |
           repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/-.*//')
           repoManjaroRel=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/^.*-//')
-          # repoBigVer=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/-.*//')
-          # repoBigRel=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/^.*-//')
+          repoBigVer=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/-.*//')
+          repoBigRel=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/^.*-//')
           
           cancel () {
             echo "Sem atualiza de versão"
@@ -136,7 +136,7 @@ jobs:
             sleep infinity
           }
           echo "repoManjaroVer=$repoManjaroVer-$repoManjaroRel"
-          # echo "repoBigVer=$repoBigVer-$repoBigRel"
+          echo "repoBigVer=$repoBigVer-$repoBigRel"
           
           if [ "$repoManjaroVer-$repoManjaroRel" != "$repoBigVer-$repoBigRel" ];then
             rm -r *
