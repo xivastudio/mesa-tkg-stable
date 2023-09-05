@@ -146,11 +146,11 @@ jobs:
             
             sed -i 's/mesa-tkg-git/mesa-tkg-stable/g' PKGBUILD
             #sed -i '/echo ${_ver\/-\/_}/s/.*/    echo $_ver/' PKGBUILD
-            sed -i "s/pkgrel=.*/pkgrel=$repoManjaroRel/" PKGBUILD
             sed -i '/function exit_cleanup/,/}/d' PKGBUILD
             sed -i '/pkgver()/,/}/d' PKGBUILD
             sed -i '/trap exit_cleanup/d' PKGBUILD
             sed -i "s/pkgver=.*/pkgver=$repoManjaroVer/" PKGBUILD
+            sed -i "s/pkgrel=.*/pkgrel=$repoManjaroRel/" PKGBUILD
             sed -i "/_mesa_branch=/s/.*/_mesa_branch='$(echo $repoManjaroVer | cut -d '.' -f 1,2)'/" customization.cfg
           else
             cancel
