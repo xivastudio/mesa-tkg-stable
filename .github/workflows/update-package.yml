@@ -123,7 +123,7 @@ jobs:
       - name: Update Mesa TKG Stable Version
         shell: bash
         run: |
-          repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/-.*//')
+          repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/-.*//' | sed 's/.*://')
           repoManjaroRel=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/^.*-//')
           repoBigVer=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/-.*//')
           repoBigRel=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/^.*-//')
