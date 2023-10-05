@@ -158,7 +158,7 @@ jobs:
 
       - name: Update github
         run: |
-          repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}')
+          repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/.*://')
           git config --local user.email "${{ secrets.GIT_USER }}@users.noreply.github.com"
           git config --local user.name "${{ secrets.GIT_USER }}"
           if [ -n "$(git commit -m "$repoManjaroVer" -a | grep "nothing to commit")" ];then exit 0; fi
