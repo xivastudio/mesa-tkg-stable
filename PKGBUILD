@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=23.1.9
+pkgver=23.3.3
 pkgrel=1
 arch=('x86_64')
 makedepends=('git' 'python-mako' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils'
@@ -230,7 +230,11 @@ prepare() {
     fi
     msg2 "Tree cleaned"
 
-    cp "$_where"/mesa-userpatches/*.mymesa* "$_where" || true # copy userpatches inside the PKGBUILD's dir
+    # copy userpatches inside the PKGBUILD's dir
+    for _file in "$_where"/mesa-userpatches/*.mymesa*
+    do
+        [ -e "$_file" ] && cp "$_file" "$_where"
+    done
 
     if [ -n "$_mesa_prs" ]; then
       for _pr in ${_mesa_prs[@]}; do
