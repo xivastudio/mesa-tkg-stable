@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=23.3.3
+pkgver=23.3.5
 pkgrel=1
 arch=('x86_64')
 makedepends=('git' 'python-mako' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva' 'elfutils'
@@ -400,6 +400,16 @@ build () {
     if ( cd "$srcdir/$_mesa_srcdir" && git merge-base --is-ancestor 6291d4d33978f14e59e64a4b66ef92ee891babc3 HEAD ); then
       _android_libbacktrace="-D android-libbacktrace=disabled"
     fi
+
+    # intel-rt
+    if ( cd "$srcdir/$_mesa_srcdir" && git merge-base --is-ancestor 876db9135048be34d84bd74b18411678e15c7c3f HEAD ); then
+      if [[ ${_vulkan_drivers[*]} =~ "intel" ]]; then
+        _intel_rt="-D intel-rt=enabled"
+      else
+        _intel_rt="-D intel-rt=disabled"
+      fi
+      _intel_rt_32="-D intel-rt=disabled"
+    fi
     # /Selector fixes
 
     if [ -n "${CUSTOM_GCC_PATH}" ] && [ "$_compiler" != "clang" ]; then
@@ -441,7 +451,7 @@ build () {
        -D shared-glapi=${_enabled_} \
        -D opengl=true \
        -D zstd=auto \
-       -D valgrind=${_enabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_no_lto $_additional_meson_flags $_additional_meson_flags_64
+       -D valgrind=${_enabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt $_no_lto $_additional_meson_flags $_additional_meson_flags_64
        
     meson configure _build64 --no-pager
 
@@ -499,7 +509,7 @@ build () {
           -D osmesa=${_osmesa} \
           -D shared-glapi=${_enabled_} \
           -D zstd=auto \
-          -D valgrind=${_disabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_no_lto $_additional_meson_flags $_additional_meson_flags_32
+          -D valgrind=${_disabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt_32 $_no_lto $_additional_meson_flags $_additional_meson_flags_32
        
       meson configure _build32 --no-pager
 
