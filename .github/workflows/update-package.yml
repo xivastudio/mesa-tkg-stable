@@ -156,6 +156,7 @@ jobs:
             #   sed -i 's/,av1dec,av1enc,vp9dec//' customization.cfg
             # fi
             sed -i '/_vulkan_drivers=/s/,nouveau//' customization.cfg
+            sed -i 's/$_intel_clc_32//' PKGBUILD
           else
             cancel
           fi
