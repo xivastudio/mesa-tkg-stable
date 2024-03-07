@@ -524,7 +524,7 @@ build () {
           -D osmesa=${_osmesa} \
           -D shared-glapi=${_enabled_} \
           -D zstd=auto \
-          -D valgrind=${_disabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt_32 $_intel_clc_32 $_no_lto $_additional_meson_flags $_additional_meson_flags_32
+          -D valgrind=${_disabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt_32  $_no_lto $_additional_meson_flags $_additional_meson_flags_32
        
       meson configure _build32 --no-pager
 
