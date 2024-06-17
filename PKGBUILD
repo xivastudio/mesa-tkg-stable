@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=24.0.6
+pkgver=24.0.9
 pkgrel=1
 arch=('x86_64')
 makedepends=('git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
@@ -455,7 +455,7 @@ build () {
        -D gbm=${_enabled_} \
        -D gles1=${_disabled_} \
        -D gles2=${_enabled_} \
-       -D glvnd=true \
+       -D glvnd=${_enabled_} \
        -D glx=dri \
        -D libunwind=${_enabled_} \
        -D llvm=${_enabled_} \
@@ -517,7 +517,7 @@ build () {
           -D gbm=${_enabled_} \
           -D gles1=${_disabled_} \
           -D gles2=${_enabled_} \
-          -D glvnd=true \
+          -D glvnd=${_enabled_} \
           -D glx=dri \
           -D libunwind=${_disabled_} \
           -D llvm=${_enabled_} \
@@ -551,8 +551,8 @@ package_mesa-tkg-stable() {
   depends=('libdrm' 'wayland' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf'
            'libomxil-bellagio' 'libunwind' 'lm_sensors' 'libglvnd'
            'expat' 'libclc' 'libx11' $_llvm)
-  provides=(mesa=$pkgver-$pkgrel vulkan-intel=$pkgver-$pkgrel vulkan-radeon=$pkgver-$pkgrel vulkan-nouveau=$pkgver-$pkgrel vulkan-mesa-layers=$pkgver-$pkgrel mesa-vulkan-layers=$pkgver-$pkgrel libva-mesa-driver=$pkgver-$pkgrel mesa-vdpau=$pkgver-$pkgrel vulkan-driver opencl-mesa=$pkgver-$pkgrel opencl-rusticl-mesa=$pkgver-$pkgrel opengl-driver opencl-driver ati-dri intel-dri nouveau-dri svga-dri mesa-dri mesa-libgl vulkan-swrast)
-  conflicts=('mesa' 'opencl-mesa' 'opencl-rusticl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-nouveau' 'vulkan-mesa-layers' 'mesa-vulkan-layers' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast')
+  provides=(mesa=$pkgver-$pkgrel vulkan-intel=$pkgver-$pkgrel vulkan-radeon=$pkgver-$pkgrel vulkan-nouveau=$pkgver-$pkgrel vulkan-mesa-layers=$pkgver-$pkgrel mesa-vulkan-layers=$pkgver-$pkgrel libva-mesa-driver=$pkgver-$pkgrel mesa-vdpau=$pkgver-$pkgrel vulkan-driver opencl-mesa=$pkgver-$pkgrel opengl-driver opencl-driver ati-dri intel-dri nouveau-dri svga-dri mesa-dri mesa-libgl vulkan-swrast)
+  conflicts=('mesa' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-nouveau' 'vulkan-mesa-layers' 'mesa-vulkan-layers' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast')
 
   DESTDIR="$pkgdir" ninja $NINJAFLAGS -C _build64 install
 
