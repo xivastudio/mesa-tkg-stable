@@ -447,7 +447,7 @@ build () {
        -D egl=enabled \
        -D gallium-extra-hud=true \
        -D gallium-nine=true \
-       -D gallium-omx=${_gallium_omx} \
+       -D gallium-omx=disabled \
        -D gallium-opencl=icd \
        -D gallium-va=${_gallium_va} \
        -D gallium-vdpau=${_gallium_vdpau} \
@@ -505,11 +505,11 @@ build () {
           -D platforms=${_platforms} \
           -D gallium-drivers=${_gallium_drivers} \
           -D vulkan-drivers=${_vulkan_drivers} \
-          -D dri3=${_enabled_} \
-          -D egl=${_enabled_} \
+          -D dri3=enabled \
+          -D egl=enabled \
           -D gallium-extra-hud=true \
           -D gallium-nine=true \
-          -D gallium-omx=${_disabled_} \
+          -D gallium-omx=disabled \
           -D gallium-opencl=${_disabled_} \
           -D gallium-va=${_gallium_va} \
           -D gallium-vdpau=${_gallium_vdpau} \
@@ -517,7 +517,7 @@ build () {
           -D gbm=${_enabled_} \
           -D gles1=${_disabled_} \
           -D gles2=${_enabled_} \
-          -D glvnd=${_enabled_} \
+          -D glvnd=true \
           -D glx=dri \
           -D libunwind=${_disabled_} \
           -D llvm=${_enabled_} \
