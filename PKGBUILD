@@ -316,8 +316,8 @@ build () {
 
     # Syntax legacy compat
     if ( cd "$srcdir/$_mesa_srcdir" && git merge-base --is-ancestor 138c003d22739b0d1e6860ed398dd511a44cde04 HEAD ); then
-      _enabled_="enabled"
-      _disabled_="disabled"
+      _enabled_="true"
+      _disabled_="false"
     else
       _enabled_="true"
       _disabled_="false"
@@ -443,8 +443,8 @@ build () {
        -D platforms=${_platforms} \
        -D gallium-drivers=${_gallium_drivers} \
        -D vulkan-drivers=${_vulkan_drivers} \
-       -D dri3=${_enabled_} \
-       -D egl=${_enabled_} \
+       -D dri3=enabled \
+       -D egl=enabled \
        -D gallium-extra-hud=true \
        -D gallium-nine=true \
        -D gallium-omx=${_gallium_omx} \
