@@ -316,8 +316,8 @@ build () {
 
     # Syntax legacy compat
     if ( cd "$srcdir/$_mesa_srcdir" && git merge-base --is-ancestor 138c003d22739b0d1e6860ed398dd511a44cde04 HEAD ); then
-      _enabled_="true"
-      _disabled_="false"
+      _enabled_="enabled"
+      _disabled_="disabled"
     else
       _enabled_="true"
       _disabled_="false"
