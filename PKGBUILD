@@ -510,7 +510,7 @@ build () {
           -D gallium-extra-hud=true \
           -D gallium-nine=true \
           -D gallium-omx=disabled \
-          -D gallium-opencl=${_disabled_} \
+          -D gallium-opencl=disabled \
           -D gallium-va=${_gallium_va} \
           -D gallium-vdpau=${_gallium_vdpau} \
           -D gallium-xa=${_gallium_xa} \
