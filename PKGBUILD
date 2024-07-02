@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=24.0.9
+pkgver=24.1.1
 pkgrel=1
 arch=('x86_64')
 makedepends=('git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
@@ -316,8 +316,8 @@ build () {
 
     # Syntax legacy compat
     if ( cd "$srcdir/$_mesa_srcdir" && git merge-base --is-ancestor 138c003d22739b0d1e6860ed398dd511a44cde04 HEAD ); then
-      _enabled_="true"
-      _disabled_="false"
+      _enabled_="enabled"
+      _disabled_="disabled"
     else
       _enabled_="true"
       _disabled_="false"
@@ -443,11 +443,11 @@ build () {
        -D platforms=${_platforms} \
        -D gallium-drivers=${_gallium_drivers} \
        -D vulkan-drivers=${_vulkan_drivers} \
-       -D dri3=enabled \
-       -D egl=enabled \
+       -D dri3=${_enabled_} \
+       -D egl=${_enabled_} \
        -D gallium-extra-hud=true \
        -D gallium-nine=true \
-       -D gallium-omx=disabled \
+       -D gallium-omx=${_gallium_omx} \
        -D gallium-opencl=icd \
        -D gallium-va=${_gallium_va} \
        -D gallium-vdpau=${_gallium_vdpau} \
@@ -455,7 +455,7 @@ build () {
        -D gbm=${_enabled_} \
        -D gles1=${_disabled_} \
        -D gles2=${_enabled_} \
-       -D glvnd=true \
+       -D glvnd=${_enabled_} \
        -D glx=dri \
        -D libunwind=${_enabled_} \
        -D llvm=${_enabled_} \
@@ -505,19 +505,19 @@ build () {
           -D platforms=${_platforms} \
           -D gallium-drivers=${_gallium_drivers} \
           -D vulkan-drivers=${_vulkan_drivers} \
-          -D dri3=enabled \
-          -D egl=enabled \
+          -D dri3=${_enabled_} \
+          -D egl=${_enabled_} \
           -D gallium-extra-hud=true \
           -D gallium-nine=true \
-          -D gallium-omx=disabled \
-          -D gallium-opencl=disabled \
+          -D gallium-omx=${_disabled_} \
+          -D gallium-opencl=${_disabled_} \
           -D gallium-va=${_gallium_va} \
           -D gallium-vdpau=${_gallium_vdpau} \
           -D gallium-xa=${_gallium_xa} \
           -D gbm=${_enabled_} \
           -D gles1=${_disabled_} \
           -D gles2=${_enabled_} \
-          -D glvnd=true \
+          -D glvnd=${_enabled_} \
           -D glx=dri \
           -D libunwind=${_disabled_} \
           -D llvm=${_enabled_} \
