@@ -127,7 +127,7 @@ jobs:
           repoManjaroRel=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/^.*-//')
           repoBigVer=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/-.*//')
           repoBigRel=$(pacman -Ss mesa | grep "biglinux-stable" | grep 'mesa-tkg-stable' | grep -v 'lib32' | awk '{print $2}' | sed 's/^.*-//')
-          
+
           cancel () {
             echo "Sem atualiza de versão"
             echo "SAINDO...."
@@ -137,13 +137,13 @@ jobs:
           }
           echo "repoManjaroVer=$repoManjaroVer-$repoManjaroRel"
           echo "repoBigVer=$repoBigVer-$repoBigRel"
-          
+
           if [ "$repoManjaroVer-$repoManjaroRel" != "$repoBigVer-$repoBigRel" ];then
             rm -r *
             git clone https://github.com/Frogging-Family/mesa-git.git
             cp -a mesa-git/* .
             sudo rm -r mesa-git
-            
+
             sed -i 's/mesa-tkg-git/mesa-tkg-stable/g' PKGBUILD
             #sed -i '/echo ${_ver\/-\/_}/s/.*/    echo $_ver/' PKGBUILD
             sed -i '/function exit_cleanup/,/}/d' PKGBUILD
@@ -161,19 +161,18 @@ jobs:
             cancel
           fi
 
-      - name: Update github
-        run: |
-          repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/.*://')
-          git config --local user.email "${{ secrets.GIT_USER }}@users.noreply.github.com"
-          git config --local user.name "${{ secrets.GIT_USER }}"
-          
-          if [ -n "$(git commit -m "$repoManjaroVer" -a | grep "nothing to commit")" ];then exit 0; fi
+      # - name: Update github
+      #   run: |
+      #     repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/.*://')
+      #     git config --local user.email "${{ secrets.GIT_USER }}@users.noreply.github.com"
+      #     git config --local user.name "${{ secrets.GIT_USER }}"
+      #     if [ -n "$(git commit -m "$repoManjaroVer" -a | grep "nothing to commit")" ];then exit 0; fi
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: ${{ github.ref }}
 
       - name: Send Hooks BigLinux Build Package
         shell: bash

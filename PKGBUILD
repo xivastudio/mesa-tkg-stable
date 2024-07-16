@@ -308,6 +308,7 @@ build () {
     fi
 
     # Selector fixes
+    _compiler=xpto
 
     # dri drivers moved to the amber branch
     if [ "$_mesa_branch" = "amber" ] || ( cd "$srcdir/$_mesa_srcdir" && ! git merge-base --is-ancestor cdde031ac2c8124721655532ee6f4149e20e9c61 HEAD ); then
