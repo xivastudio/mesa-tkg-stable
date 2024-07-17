@@ -51,7 +51,7 @@ makedepends=('git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'li
              'wayland-protocols' 'meson' 'ninja' 'libdrm' 'xorgproto' 'libdrm' 'libxshmfence' 
              'libxxf86vm' 'libxdamage' 'libclc' 'libglvnd' 'libunwind' 'lm_sensors' 'libxrandr'
              'valgrind' 'glslang' 'byacc' 'wget' 'flex' 'bison' 'rust' 'rust-bindgen' 'spirv-llvm-translator'
-             'cbindgen' 'python-packaging' 'clang')
+             'cbindgen' 'python-packaging')
 
 if [ "$_lib32" == "true" ]; then
   makedepends+=('lib32-libxml2' 'lib32-libx11' 'lib32-libdrm' 'lib32-libxshmfence' 'lib32-libxxf86vm'
@@ -428,13 +428,13 @@ build () {
       msg2 "CUSTOM_GCC_PATH = ${CUSTOM_GCC_PATH}"
     fi
 
-#     if [ "$_compiler" = "clang" ]; then
-#       export CC="clang"
-#       export CXX="clang++"
-#     else
+    if [ "$_compiler" = "clang" ]; then
+      export CC="clang"
+      export CXX="clang++"
+    else
       export CC="gcc"
       export CXX="g++"
-#     fi
+    fi
 
     arch-meson $_mesa_srcdir _build64 \
        --wrap-mode=nofallback \
@@ -486,13 +486,13 @@ build () {
 
     if [ "$_lib32" == "true" ]; then
       cd "$srcdir"
-#       if [ "$_compiler" = "clang" ]; then
-#         export CC="clang -m32"
-#         export CXX="clang++ -m32"
-#       else
+      if [ "$_compiler" = "clang" ]; then
+        export CC="clang -m32"
+        export CXX="clang++ -m32"
+      else
         export CC="gcc -m32"
         export CXX="g++ -m32"
-#       fi
+      fi
       export PKG_CONFIG=/usr/bin/i686-pc-linux-gnu-pkg-config
 
       arch-meson $_mesa_srcdir _build32 \
