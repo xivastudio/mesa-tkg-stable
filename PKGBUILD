@@ -486,13 +486,13 @@ build () {
 
     if [ "$_lib32" == "true" ]; then
       cd "$srcdir"
-      if [ "$_compiler" = "clang" ]; then
-        export CC="clang -m32"
-        export CXX="clang++ -m32"
-      else
+#       if [ "$_compiler" = "clang" ]; then
+#         export CC="clang -m32"
+#         export CXX="clang++ -m32"
+#       else
         export CC="gcc -m32"
         export CXX="g++ -m32"
-      fi
+#       fi
       export PKG_CONFIG=/usr/bin/i686-pc-linux-gnu-pkg-config
 
       arch-meson $_mesa_srcdir _build32 \
