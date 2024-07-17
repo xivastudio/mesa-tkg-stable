@@ -308,7 +308,6 @@ build () {
     fi
 
     # Selector fixes
-    _compiler=xpto
 
     # dri drivers moved to the amber branch
     if [ "$_mesa_branch" = "amber" ] || ( cd "$srcdir/$_mesa_srcdir" && ! git merge-base --is-ancestor cdde031ac2c8124721655532ee6f4149e20e9c61 HEAD ); then
@@ -429,13 +428,13 @@ build () {
       msg2 "CUSTOM_GCC_PATH = ${CUSTOM_GCC_PATH}"
     fi
 
-    if [ "$_compiler" = "clang" ]; then
-      export CC="clang"
-      export CXX="clang++"
-    else
+#     if [ "$_compiler" = "clang" ]; then
+#       export CC="clang"
+#       export CXX="clang++"
+#     else
       export CC="gcc"
       export CXX="g++"
-    fi
+#     fi
 
     arch-meson $_mesa_srcdir _build64 \
        --wrap-mode=nofallback \
