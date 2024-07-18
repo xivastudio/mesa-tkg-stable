@@ -157,22 +157,24 @@ jobs:
             # fi
             sed -i '/_vulkan_drivers=/s/,nouveau//' customization.cfg
             sed -i 's/$_intel_clc_32//' PKGBUILD
+            sed -i "/makedepends=/s/(/\('clang\' /" PKGBUILD
+            sed -i "/makedepends+=/s/(/\('lib32-clang\' /" PKGBUILD
           else
             cancel
           fi
 
-      # - name: Update github
-      #   run: |
-      #     repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/.*://')
-      #     git config --local user.email "${{ secrets.GIT_USER }}@users.noreply.github.com"
-      #     git config --local user.name "${{ secrets.GIT_USER }}"
-      #     if [ -n "$(git commit -m "$repoManjaroVer" -a | grep "nothing to commit")" ];then exit 0; fi
+      - name: Update github
+        run: |
+          repoManjaroVer=$(pacman -Ss mesa | grep "extra" | grep 'mesa' | grep -vE '\-mesa|mesa-' | awk '{print $2}' | sed 's/.*://')
+          git config --local user.email "${{ secrets.GIT_USER }}@users.noreply.github.com"
+          git config --local user.name "${{ secrets.GIT_USER }}"
+          if [ -n "$(git commit -m "$repoManjaroVer" -a | grep "nothing to commit")" ];then exit 0; fi
 
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: ${{ github.ref }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
 
       - name: Send Hooks BigLinux Build Package
         shell: bash
