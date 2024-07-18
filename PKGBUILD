@@ -46,7 +46,7 @@ pkgdesc="an open-source implementation of the OpenGL specification, git version"
 pkgver=24.1.3
 pkgrel=1
 arch=('x86_64')
-makedepends=('git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
+makedepends=('clang' 'git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
              'elfutils' 'libomxil-bellagio' 'libxrandr' 'ocl-icd' 'libgcrypt'  'wayland'
              'wayland-protocols' 'meson' 'ninja' 'libdrm' 'xorgproto' 'libdrm' 'libxshmfence' 
              'libxxf86vm' 'libxdamage' 'libclc' 'libglvnd' 'libunwind' 'lm_sensors' 'libxrandr'
@@ -54,7 +54,7 @@ makedepends=('git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'li
              'cbindgen' 'python-packaging')
 
 if [ "$_lib32" == "true" ]; then
-  makedepends+=('lib32-libxml2' 'lib32-libx11' 'lib32-libdrm' 'lib32-libxshmfence' 'lib32-libxxf86vm'
+  makedepends+=('lib32-clang' 'lib32-libxml2' 'lib32-libx11' 'lib32-libdrm' 'lib32-libxshmfence' 'lib32-libxxf86vm'
                 'lib32-gcc-libs' 'lib32-libvdpau' 'lib32-libelf' 'lib32-libgcrypt'
                 'lib32-lm_sensors' 'lib32-libxdamage' 'gcc-multilib' 'lib32-libunwind' 'lib32-libglvnd'
                 'lib32-libva' 'lib32-wayland' 'lib32-libvdpau' 'lib32-libxrandr' 'lib32-expat'
@@ -176,10 +176,10 @@ fi
 case $MESA_WHICH_LLVM in
     1)
         # aur llvm-minimal-git
-        makedepends+=('llvm-minimal-git')
+        makedepends+=('lib32-clang' 'llvm-minimal-git')
         _llvm='llvm-libs-minimal-git'
         if [ "$_lib32" == "true" ]; then
-          makedepends+=('lib32-llvm-minimal-git')
+          makedepends+=('lib32-clang' 'lib32-llvm-minimal-git')
           _lib32_llvm='lib32-llvm-libs-minimal-git'
         fi
         msg2 "Using llvm-minimal-git (AUR)"
@@ -188,10 +188,10 @@ case $MESA_WHICH_LLVM in
     2)
         # aur llvm-git
         # depending on aur-llvm-* to avoid mixup with LH llvm-git
-        makedepends+=('aur-llvm-git')
+        makedepends+=('lib32-clang' 'aur-llvm-git')
         _llvm='aur-llvm-libs-git'
         if [ "$_lib32" == "true" ]; then
-          makedepends+=('aur-lib32-llvm-git')
+          makedepends+=('lib32-clang' 'aur-lib32-llvm-git')
           _lib32_llvm='aur-lib32-llvm-libs-git'
         fi
         msg2 "Using llvm-git (AUR)"
@@ -199,10 +199,10 @@ case $MESA_WHICH_LLVM in
         ;;
     3)
         # mesa-git/llvm-git (lordheavy unofficial repo)
-        makedepends+=('llvm-git' 'clang-git')
+        makedepends+=('lib32-clang' 'llvm-git' 'clang-git')
         _llvm='llvm-libs-git'
         if [ "$_lib32" == "true" ]; then
-          makedepends+=('lib32-llvm-git')
+          makedepends+=('lib32-clang' 'lib32-llvm-git')
           _lib32_llvm='lib32-llvm-libs-git'
         fi
         msg2 "Using llvm-git from LordHeavy unofficial repo"
@@ -210,10 +210,10 @@ case $MESA_WHICH_LLVM in
         ;;
     4)
         # extra/llvm
-        makedepends+=('llvm>=8.0.0' 'clang>=8.0.0')
+        makedepends+=('lib32-clang' 'llvm>=8.0.0' 'clang>=8.0.0')
         _llvm='llvm-libs>=8.0.0'
         if [ "$_lib32" == "true" ]; then
-          makedepends+=('lib32-llvm>=8.0.0')
+          makedepends+=('lib32-clang' 'lib32-llvm>=8.0.0')
           _lib32_llvm='lib32-llvm-libs>=8.0.0'
         fi
         msg2 "Using llvm (default)"
