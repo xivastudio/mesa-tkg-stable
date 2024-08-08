@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=24.1.3
+pkgver=24.1.5
 pkgrel=1
 arch=('x86_64')
 makedepends=('clang' 'git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
@@ -51,7 +51,7 @@ makedepends=('clang' 'git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'lib
              'wayland-protocols' 'meson' 'ninja' 'libdrm' 'xorgproto' 'libdrm' 'libxshmfence' 
              'libxxf86vm' 'libxdamage' 'libclc' 'libglvnd' 'libunwind' 'lm_sensors' 'libxrandr'
              'valgrind' 'glslang' 'byacc' 'wget' 'flex' 'bison' 'rust' 'rust-bindgen' 'spirv-llvm-translator'
-             'cbindgen' 'python-packaging')
+             'cbindgen' 'python-packaging' 'python-yaml')
 
 if [ "$_lib32" == "true" ]; then
   makedepends+=('lib32-clang' 'lib32-libxml2' 'lib32-libx11' 'lib32-libdrm' 'lib32-libxshmfence' 'lib32-libxxf86vm'
