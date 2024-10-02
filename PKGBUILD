@@ -43,7 +43,7 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=24.1.6
+pkgver=24.2.2
 pkgrel=1
 arch=('x86_64')
 makedepends=('clang' 'git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
@@ -421,6 +421,17 @@ build () {
         export PATH=$srcdir/_build64/src/intel/compiler:${PATH}
       fi
     fi
+
+    # omx removal
+    if ( cd "$srcdir/$_mesa_srcdir" && ! git merge-base --is-ancestor 9b6c27a320ab4b0fcf1fb16220ae7c3d3f06f7df HEAD ); then
+      _omx="-D gallium-omx=${_gallium_omx}"
+      _omx_32="-D gallium-omx="${_disabled_}""
+    fi
+
+    # dri3 removal
+    if ( cd "$srcdir/$_mesa_srcdir" && ! git merge-base --is-ancestor 8f6fca89aa1812b03da6d9f7fac3966955abc41e HEAD ); then
+      _dri3="-D dri3=${_enabled_}"
+    fi
     # /Selector fixes
 
     if [ -n "${CUSTOM_GCC_PATH}" ] && [ "$_compiler" != "clang" ]; then
@@ -443,11 +454,9 @@ build () {
        -D platforms=${_platforms} \
        -D gallium-drivers=${_gallium_drivers} \
        -D vulkan-drivers=${_vulkan_drivers} \
-       -D dri3=${_enabled_} \
        -D egl=${_enabled_} \
        -D gallium-extra-hud=true \
        -D gallium-nine=true \
-       -D gallium-omx=${_gallium_omx} \
        -D gallium-opencl=icd \
        -D gallium-va=${_gallium_va} \
        -D gallium-vdpau=${_gallium_vdpau} \
@@ -464,7 +473,7 @@ build () {
        -D shared-glapi=${_enabled_} \
        -D opengl=true \
        -D zstd=auto \
-       -D valgrind=${_enabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt $_no_lto $_additional_meson_flags $_additional_meson_flags_64
+       -D valgrind=${_enabled_} $_legacy_switches $_dri3 $_omx $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt $_no_lto $_additional_meson_flags $_additional_meson_flags_64
        
     meson configure _build64 --no-pager
 
@@ -494,6 +503,7 @@ build () {
         export CXX="g++ -m32"
       fi
       export PKG_CONFIG=/usr/bin/i686-pc-linux-gnu-pkg-config
+      export BINDGEN_EXTRA_CLANG_ARGS="--target=i686-unknown-linux-gnu"
 
       arch-meson $_mesa_srcdir _build32 \
           --cross-file lib32 \
@@ -505,11 +515,9 @@ build () {
           -D platforms=${_platforms} \
           -D gallium-drivers=${_gallium_drivers} \
           -D vulkan-drivers=${_vulkan_drivers} \
-          -D dri3=${_enabled_} \
           -D egl=${_enabled_} \
           -D gallium-extra-hud=true \
           -D gallium-nine=true \
-          -D gallium-omx=${_disabled_} \
           -D gallium-opencl=${_disabled_} \
           -D gallium-va=${_gallium_va} \
           -D gallium-vdpau=${_gallium_vdpau} \
@@ -525,7 +533,7 @@ build () {
           -D osmesa=${_osmesa} \
           -D shared-glapi=${_enabled_} \
           -D zstd=auto \
-          -D valgrind=${_disabled_} $_legacy_switches $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt_32  $_no_lto $_additional_meson_flags $_additional_meson_flags_32
+          -D valgrind=${_disabled_} $_legacy_switches $_dri3 $_omx_32 $_dri_inc $_microsoft_clc $_xvmc $_layers $_optional_codecs $_android_libbacktrace $_intel_rt_32  $_no_lto $_additional_meson_flags $_additional_meson_flags_32
        
       meson configure _build32 --no-pager
 
@@ -550,7 +558,7 @@ build () {
 package_mesa-tkg-stable() {
   depends=('libdrm' 'wayland' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf'
            'libomxil-bellagio' 'libunwind' 'lm_sensors' 'libglvnd'
-           'expat' 'libclc' 'libx11' $_llvm)
+           'expat' 'libclc' 'libx11' $_llvm 'spirv-tools')
   provides=(mesa=$pkgver-$pkgrel vulkan-intel=$pkgver-$pkgrel vulkan-radeon=$pkgver-$pkgrel vulkan-nouveau=$pkgver-$pkgrel vulkan-mesa-layers=$pkgver-$pkgrel mesa-vulkan-layers=$pkgver-$pkgrel libva-mesa-driver=$pkgver-$pkgrel mesa-vdpau=$pkgver-$pkgrel vulkan-driver opencl-mesa=$pkgver-$pkgrel opengl-driver opencl-driver ati-dri intel-dri nouveau-dri svga-dri mesa-dri mesa-libgl vulkan-swrast)
   conflicts=('mesa' 'opencl-mesa' 'vulkan-intel' 'vulkan-radeon' 'vulkan-nouveau' 'vulkan-mesa-layers' 'mesa-vulkan-layers' 'libva-mesa-driver' 'mesa-vdpau' 'vulkan-swrast')
 
@@ -578,7 +586,7 @@ package_mesa-tkg-stable() {
 package_lib32-mesa-tkg-stable() {
   depends=('lib32-libdrm' 'lib32-libxxf86vm' 'lib32-libxdamage' 'lib32-libxshmfence'
            'lib32-lm_sensors' 'lib32-libelf' 'lib32-wayland'
-           'lib32-libglvnd' 'lib32-libx11' 'mesa' $_lib32_llvm)
+           'lib32-libglvnd' 'lib32-libx11' 'mesa' $_lib32_llvm 'lib32-spirv-tools')
   provides=(lib32-mesa=$pkgver-$pkgrel lib32-vulkan-intel=$pkgver-$pkgrel lib32-vulkan-radeon=$pkgver-$pkgrel lib32-vulkan-nouveau=$pkgver-$pkgrel lib32-vulkan-mesa-layers=$pkgver-$pkgrel lib32-mesa-vulkan-layers=$pkgver-$pkgrel lib32-libva-mesa-driver=$pkgver-$pkgrel lib32-mesa-vdpau=$pkgver-$pkgrel lib32-opengl-driver lib32-vulkan-driver lib32-ati-dri lib32-intel-dri lib32-nouveau-dri lib32-mesa-dri lib32-mesa-libgl lib32-vulkan-swrast)
   conflicts=('lib32-mesa' 'lib32-vulkan-intel' 'lib32-vulkan-radeon' 'lib32-vulkan-nouveau' 'lib32-vulkan-mesa-layers' 'lib32-mesa-vulkan-layers' 'lib32-libva-mesa-driver' 'lib32-mesa-vdpau' 'lib32-vulkan-swrast')
 
