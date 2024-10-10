@@ -43,8 +43,8 @@ else
 fi
 
 pkgdesc="an open-source implementation of the OpenGL specification, git version"
-pkgver=24.2.2
-pkgrel=1
+pkgver=24.2.4
+pkgrel=0
 arch=('x86_64')
 makedepends=('clang' 'git' 'python-mako' 'python-ply' 'xorgproto' 'libxml2' 'libx11' 'libvdpau' 'libva'
              'elfutils' 'libomxil-bellagio' 'libxrandr' 'ocl-icd' 'libgcrypt'  'wayland'
